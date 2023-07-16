@@ -32,6 +32,7 @@
     border: 3px solid #f4f9ff;
     color: #f4f9ff;
     font-size: 2vh;
+
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -52,6 +53,7 @@
     background-color: transparent;
     color: #f4f9ff;
     font-size: 5vh;
+
     font-weight: 600;
 }
 
@@ -62,6 +64,7 @@
     background-color: transparent;
     color: #f4f9ff;
     font-size: 3vh;
+
     font-weight: 300;
 }
 
@@ -73,6 +76,7 @@
     background-color: transparent;
     color: #f4f9ff;
     font-size: 4vh;
+
     font-weight: 600;
 }
 

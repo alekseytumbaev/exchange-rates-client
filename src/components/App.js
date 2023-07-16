@@ -32,6 +32,7 @@ class App extends React.Component {
         super(props);
         const parts= new Date();
         const formattedDate = parts.toISOString().slice(0, 10);
+
         this.state = {
             rates: [],
             ratesChages: [],
@@ -83,7 +84,6 @@ class App extends React.Component {
                     axios.get(this.state.urlChanges).then((result) =>
                     {
                         this.setState({ratesChages: result.data}, () => {
-
                         });
                     });
                 }
@@ -106,6 +106,7 @@ class App extends React.Component {
         const { rates } = this.state;
         switch (currentPage) {
             case "home":
+                window.scrollTo(0, 0);
                 return (
                     <div>
                         <HomePage onPageChange={this.handlePageChange}/>
@@ -113,6 +114,7 @@ class App extends React.Component {
                     </div>
                 );
             case "currency":
+                window.scrollTo(0, 0);
                 return (<div>
                     <InfoText />
                     <DateButton updateTable={this.updateTable} />
@@ -121,6 +123,7 @@ class App extends React.Component {
                     <Footer />
                 </div>);
             case "changes":
+                window.scrollTo(0, 0);
                 return (
                     <div>
                         <ChangesPage updateChanges = {this.updateChangesPage} ratesChages = {this.state.ratesChages} code={this.state.codeValute} date={this.state.datePeriod}/>
@@ -128,6 +131,7 @@ class App extends React.Component {
                     </div>
                 );
             case "about":
+                window.scrollTo(0, 0);
                 return (
                     <div>
                         <AboutPage />
@@ -143,6 +147,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Notification baseUrl={baseUrl} updateMassiveRates={this.updateMassiveRates}/>
+
                 <Header currentPage={currentPage} onPageChange={this.handlePageChange} updateCodeValute = {this.updateCodeValute}/>
                 {this.renderPage()}
                 <SidePanel currentPage={currentPage} onPageChange={this.handlePageChange} />
