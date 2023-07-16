@@ -15,7 +15,7 @@ import axios from "axios";
 import AboutPage from "./AboutPage";
 import Notification from "./Notification";
 
-const baseUrl = "http://localhost:8080/";
+const baseUrl = "https://exchange-rates-server.onrender.com/";
 
 class App extends React.Component {
     componentDidMount() {
