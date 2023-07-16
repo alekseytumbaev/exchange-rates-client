@@ -1,11 +1,14 @@
-import React from "react";
+const Rate = ({ rate, onPageChange, updateCodeValute }) => {
+    const handleItemClick = (itemName, page) => {
+        onPageChange(page);
+        updateCodeValute(itemName);
+    };
 
-const Rate = ({ rate }) => {
     return (
-        <tr>
+        <tr onClick={() => handleItemClick(rate.chCode, "changes")}>
             <td>{rate.digitCode}</td>
             <td>{rate.chCode}</td>
-            <td>{rate.valueName}</td>
+            <td>{rate.valuteName}</td>
             <td>{rate.quantity}</td>
             <td>{rate.rate}</td>
         </tr>

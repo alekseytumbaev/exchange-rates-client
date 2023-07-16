@@ -1,0 +1,29 @@
+.selector {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 0.7%;
+    margin-top: 0.7%;
+}
+
+.selector label {
+    background-color: #f4faff;
+    margin-right: 10px;
+}
+
+.selector select {
+    color: #030710;
+    font-size: 16px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+    border-color: #c7d9e5;
+    background-color: #f4faff;
+    width: 37.5vh;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0.3%;
+}
+
+.selector select:focus {
+    outline-color: #09233c;
+}

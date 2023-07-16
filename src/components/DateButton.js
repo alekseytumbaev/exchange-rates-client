@@ -12,17 +12,20 @@ class DateButton extends React.Component {
     }
 
     handleDateSelect = date => {
-        if (date.toLocaleDateString() > new Date().toLocaleDateString())
-        {
-            const newDate = new Date().toLocaleDateString();
-            this.setState({ selectedDate: new Date() });
-            this.props.updateTable(newDate);
+        const selectedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        if (selectedDate > currentDate) {
+            this.setState({ selectedDate: currentDate });
+            this.props.updateTable(currentDate.toLocaleDateString());
         } else {
-            const newDate = date.toLocaleDateString();
-            this.setState({ selectedDate: date });
-            this.props.updateTable(newDate);
+            this.setState({ selectedDate });
+            this.props.updateTable(selectedDate.toLocaleDateString());
         }
     };
+
 
     render() {
         const { selectedDate } = this.state;
