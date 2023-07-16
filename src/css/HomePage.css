@@ -31,7 +31,8 @@
     background-color: transparent;
     border: 3px solid #f4f9ff;
     color: #f4f9ff;
-    font-size: 18px;
+    font-size: 2vh;
+
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -51,7 +52,8 @@
     left: 5%;
     background-color: transparent;
     color: #f4f9ff;
-    font-size: 48px;
+    font-size: 5vh;
+
     font-weight: 600;
 }
 
@@ -61,7 +63,8 @@
     left: 5%;
     background-color: transparent;
     color: #f4f9ff;
-    font-size: 28px;
+    font-size: 3vh;
+
     font-weight: 300;
 }
 
@@ -72,7 +75,8 @@
     left: 5%;
     background-color: transparent;
     color: #f4f9ff;
-    font-size: 36px;
+    font-size: 4vh;
+
     font-weight: 600;
 }
 
@@ -82,7 +86,7 @@
     left: 5%;
     background-color: transparent;
     color: #f4f9ff;
-    font-size: 20px;
+    font-size: 2vh;
     font-weight: 300;
 }
 

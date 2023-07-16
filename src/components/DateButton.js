@@ -19,10 +19,10 @@ class DateButton extends React.Component {
 
         if (selectedDate > currentDate) {
             this.setState({ selectedDate: currentDate });
-            this.props.updateTable(currentDate.toLocaleDateString());
+            this.props.updateTable(currentDate.toISOString().slice(0, 10));
         } else {
             this.setState({ selectedDate });
-            this.props.updateTable(selectedDate.toLocaleDateString());
+            this.props.updateTable(selectedDate.toISOString().slice(0, 10));
         }
     };
 

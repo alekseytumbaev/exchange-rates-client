@@ -13,8 +13,9 @@ import HomePage from "./HomePage";
 import ChangesPage from "./ChangesPage";
 import axios from "axios";
 import AboutPage from "./AboutPage";
+import Notification from "./Notification";
 
-const baseUrl = "http://localhost:8080/rates";
+const baseUrl = "http://localhost:8080/";
 
 class App extends React.Component {
     componentDidMount() {
@@ -29,39 +30,60 @@ class App extends React.Component {
         const endDate = new Date();
         startDate.setDate(endDate.getDate() - 7);
         super(props);
-        const parts= new Date().toLocaleDateString().split('.');
-        const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        const parts= new Date();
+        const formattedDate = parts.toISOString().slice(0, 10);
+
         this.state = {
             rates: [],
             ratesChages: [],
             currentPage: "home",
-            urlTable: baseUrl + "?date=" + formattedDate,
+            urlTable: baseUrl + "rates?date=" + formattedDate,
             urlChages: "",
             codeValute: "AUD",
             datePeriod: {
-                startDateFormatted: startDate.toLocaleDateString().split('.').reverse().join('-'),
-                endDateFormatted: endDate.toLocaleDateString().split('.').reverse().join('-')
+                startDateFormatted: startDate.toISOString().slice(0, 10),
+                endDateFormatted: endDate.toISOString().slice(0, 10)
             }
         }
-    }
+    };
     updateTable = (date) => {
-        const parts = date.split('.');
-        const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-        this.setState({ urlTable:baseUrl + "?date=" + formattedDate });
+        this.setState({ urlTable:baseUrl + "rates?date=" + date });
         axios.get(this.state.urlTable).then((res) =>
         {
             this.setState({rates: res.data});
         });
     };
+
+    updateMassiveRates = (updatedRates) => {
+        if (!Array.isArray(updatedRates)) {
+            updatedRates = [updatedRates]; // Обернуть в массив, если это не массив
+        }
+
+        this.setState((prevState) => {
+            const updatedRatesArray = [...prevState.rates];
+            updatedRates.forEach((updatedRate) => {
+                const indexToUpdate = updatedRatesArray.findIndex(
+                    (rate) => rate.chCode === updatedRate.chCode
+                );
+                if (indexToUpdate !== -1) {
+                    updatedRatesArray[indexToUpdate] = updatedRate;
+                } else {
+                    updatedRatesArray.push(updatedRate);
+                }
+            });
+            return { rates: updatedRatesArray };
+        });
+    };
+
+
     updateChangesPage = (dates, valuteCode) => {
         this.setState({ codeValute: valuteCode }, () => {
             this.setState(
-                { urlChanges: baseUrl + "/dynamic?from=" + dates.startDateFormatted + "&to=" + dates.endDateFormatted + "&code=" + this.state.codeValute },
+                { urlChanges: baseUrl + "rates/dynamic?from=" + dates.startDateFormatted + "&to=" + dates.endDateFormatted + "&code=" + this.state.codeValute },
                 () => {
                     axios.get(this.state.urlChanges).then((result) =>
                     {
                         this.setState({ratesChages: result.data}, () => {
-                            console.log(this.state.ratesChages)
                         });
                     });
                 }
@@ -73,9 +95,10 @@ class App extends React.Component {
         this.setState({ codeValute: code }, () => {
             this.updateChangesPage(this.state.datePeriod, this.state.codeValute);
         });
-    }
+    };
 
     handlePageChange = (page) => {
+        window.scrollTo(0, 0);
         this.setState({ currentPage: page });
     };
     renderPage = () => {
@@ -123,12 +146,14 @@ class App extends React.Component {
         const { currentPage } = this.state;
         return (
             <div className="App">
+                <Notification baseUrl={baseUrl} updateMassiveRates={this.updateMassiveRates}/>
+
                 <Header currentPage={currentPage} onPageChange={this.handlePageChange} updateCodeValute = {this.updateCodeValute}/>
                 {this.renderPage()}
                 <SidePanel currentPage={currentPage} onPageChange={this.handlePageChange} />
             </div>
         );
-    }
+    };
 }
 
 export default App;

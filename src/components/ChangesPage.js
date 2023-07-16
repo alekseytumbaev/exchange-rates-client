@@ -2,8 +2,6 @@ import React from "react";
 import DateSelector from "./DateSelector";
 import ChartComponent from "./ChartComponent";
 import "../css/ChangesPage.css";
-import {callback} from "chart.js/helpers";
-import axios from "axios";
 
 class ChangesPage extends React.Component {
     constructor(props) {
@@ -215,8 +213,8 @@ class ChangesPage extends React.Component {
                 startDate.setFullYear(endDate.getFullYear() - 1);
             }
 
-            const startDateFormatted = startDate.toLocaleDateString().split('.').reverse().join('-');
-            const endDateFormatted = endDate.toLocaleDateString().split('.').reverse().join('-');
+            const startDateFormatted = startDate.toISOString().slice(0, 10);
+            const endDateFormatted = endDate.toISOString().slice(0, 10);
 
             this.setState(prevState => ({
                 datePeriod: {
