@@ -8,18 +8,21 @@ class SidePanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isPanelOpen: false, // Состояние панели: открыта или закрыта
+            isPanelOpen: false,
         };
     }
 
     handleTogglePanel = () => {
         this.setState((prevState) => ({
-            isPanelOpen: !prevState.isPanelOpen, // Инвертировать состояние панели
+            isPanelOpen: !prevState.isPanelOpen,
         }));
     };
 
     handleItemClick = (itemName) => {
         this.props.onPageChange(itemName);
+        this.setState((prevState) => ({
+            isPanelOpen: !prevState.isPanelOpen,
+        }));
     };
 
     render() {

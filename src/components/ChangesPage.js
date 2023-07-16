@@ -1,12 +1,14 @@
 import React from "react";
-import "../css/Header.css";
-import logo from "../img/logo.png";
+import DateSelector from "./DateSelector";
+import ChartComponent from "./ChartComponent";
+import "../css/ChangesPage.css";
 
-class Header extends React.Component {
+class ChangesPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rates: [
+            selectedCurrency: this.props.code,
+            currencyList: [
                 {
                     nameValue: "Австралийский доллар",
                     codeValue: "AUD"
@@ -180,56 +182,78 @@ class Header extends React.Component {
                     codeValue: "JPY "
                 }
             ],
-            searchQuery: "",
-            suggestions: []
+            selectedPeriod: "",
+            datePeriod: {
+                startDateFormatted: this.props.date.startDateFormatted,
+                endDateFormatted: this.props.date.endDateFormatted
+            }
         };
     }
-    handleItemClick = (itemName, page) => {
-        this.props.onPageChange(page);
-        this.setState((prevState) => ({
-            isPanelOpen: !prevState.isPanelOpen,
-        }));
-        this.props.updateCodeValute(itemName);
-        this.setState({ searchQuery: "", suggestions: [] });
+
+    handleCurrencySelect = event => {
+        this.setState({selectedCurrency : event.target.value}, function() {
+            this.props.updateChanges(this.state.datePeriod, this.state.selectedCurrency);
+        }) ;
     };
 
-    handleInputChange = (event) => {
-        const searchQuery = event.target.value;
-        const { rates } = this.state;
+    handlePeriodSelect = event => {
+        const selectedPeriod = event.target.value;
+        this.setState({ selectedPeriod }, () => {
+            const { selectedPeriod } = this.state;
+            const startDate = new Date();
+            const endDate = new Date();
 
-        if (searchQuery === "") {
-            this.setState({ searchQuery, suggestions: [] });
-        } else {
-            const suggestions = rates.filter(
-                (rate) =>
-                    rate.nameValue.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    rate.codeValue.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            this.setState({ searchQuery, suggestions });
-        }
+            if (selectedPeriod === "week") {
+                startDate.setDate(endDate.getDate() - 7);
+            } else if (selectedPeriod === "month") {
+                startDate.setMonth(endDate.getMonth() - 1);
+            } else if (selectedPeriod === "half year") {
+                startDate.setMonth(endDate.getMonth() - 6);
+            } else if (selectedPeriod === "year") {
+                startDate.setFullYear(endDate.getFullYear() - 1);
+            }
+
+            const startDateFormatted = startDate.toISOString().slice(0, 10);
+            const endDateFormatted = endDate.toISOString().slice(0, 10);
+
+            this.setState(prevState => ({
+                datePeriod: {
+                    startDateFormatted,
+                    endDateFormatted
+                }
+            }), () => {
+                this.props.updateChanges(this.state.datePeriod, this.state.selectedCurrency);
+            });
+        });
     };
 
     render() {
-        const { searchQuery, suggestions } = this.state;
-
+        const { selectedPeriod, currencyList } = this.state;
         return (
-            <div className="header">
-                <img src={logo} alt="Логотип" className="logo" onClick={() => this.handleItemClick("AUD","home")}/>
-                <div className="search-container">
-                    <input type="text" placeholder="Поиск курса валют" value={searchQuery} onChange={this.handleInputChange}/>
-                    {suggestions.length > 0 && (
-                        <ul className="suggestions">
-                            {suggestions.map((rate, index) => (
-                                <li key={index} onClick={() => this.handleItemClick(rate.codeValue, "changes")}>
-                                    {rate.nameValue} ({rate.codeValue})
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+            <div className={"changes-page"}>
+                <div className={"info-div"}>
+                    <h1 className={"main-text"}>Изменения курса валюты</h1>
+                    <p className={"text-information"}>
+                        Курсы валют предоставлены Центральным Банком Российской Федерации. Данные обновляются ежедневно и представляют изменения курсов различных валют относительно российского рубля.
+                    </p>
+                    <div className="custom-selected-date">
+                        <span>Выбранная дата:</span>
+                        <span> с {this.state.datePeriod.startDateFormatted} по {this.state.datePeriod.endDateFormatted}</span>
+                    </div>
+                    <DateSelector
+                        selectedPeriod={selectedPeriod}
+                        onSelectPeriod={this.handlePeriodSelect}
+                        currencies={currencyList}
+                        selectedCurrency={this.state.selectedCurrency}
+                        onSelectCurrency={this.handleCurrencySelect}
+                    />
+                </div>
+                <div className={"chart"}>
+                    <ChartComponent currencyData={this.props.ratesChages} selectedCurrency={this.state.selectedCurrency}/>
                 </div>
             </div>
         );
     }
 }
 
-export default Header;
+export default ChangesPage;
