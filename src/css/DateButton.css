@@ -1,0 +1,39 @@
+.custom-datepicker {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 15%;
+    padding-top: 1%;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+}
+
+.custom-datepicker-button {
+    font-family: 'Exo 2', sans-serif;
+    text-align: center;
+    height: 30px;
+    background-color: #C96567;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-datepicker-info {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 4px;
+    color: #38292C;
+}
+
+.custom-datepicker-info span {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.custom-datepicker-info span:last-child {
+    font-weight: bold;
+}

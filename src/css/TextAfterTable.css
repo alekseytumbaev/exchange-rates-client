@@ -1,0 +1,11 @@
+.text {
+    display: flex;
+    align-items: center;
+    width: 67%;
+    padding-left: 14%;
+    color: #38292C;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    padding-bottom: 1%;
+}
