@@ -4,7 +4,7 @@
     right: 0;
     width: 17%;
     height: 100%;
-    background-color: #C96567;
+    background-color: #2e4765;
     transition: transform 0.3s ease;
     transform: translateX(100%);
 }
@@ -20,8 +20,8 @@
     top: 0;
     left: -70px;
     height: 100%;
-    background-color: #9E5A63;
-    color: #ffecf0;
+    background-color: #09233c;
+    color: #f4faff;
     cursor: pointer;
 }
 
@@ -44,7 +44,7 @@
 .toggle-button .menu-icon {
     width: 70px;
     height: 30px;
-    color: #ffecf0;
+    color: #f4faff;
     cursor: pointer;
     transition: transform 0.5s ease;
 }
@@ -58,7 +58,7 @@
 }
 
 .panel-item {
-    color: #ffecf0;
+    color: #f4faff;
     font-family: 'Exo 2', sans-serif;
     font-weight: 300;
     display: block;
@@ -69,7 +69,7 @@
 }
 
 .panel-item:hover {
-    color: #97AABD;
+    color: #c7d9e5;
 }
 
 .side-panel-close {
@@ -82,7 +82,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: #9E5A63;
+    background-color: #09233c;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -106,7 +106,7 @@
 .side-panel-close .menu-icon {
     height: 40%;
     width: 40%;
-    color: #ffecf0;
+    color: #f4faff;
     cursor: pointer;
     transition: transform 0.5s ease;
 }

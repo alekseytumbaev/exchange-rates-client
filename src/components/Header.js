@@ -184,9 +184,13 @@ class Header extends React.Component {
             suggestions: []
         };
     }
-    handleItemClick = (itemName) => {
-        console.log(`Вы нажали на "${itemName}"`);
-        // Здесь можно добавить логику для обработки события onClick
+    handleItemClick = (itemName, page) => {
+        this.props.onPageChange(page);
+        this.setState((prevState) => ({
+            isPanelOpen: !prevState.isPanelOpen,
+        }));
+        this.props.updateCodeValute(itemName);
+        this.setState({ searchQuery: "", suggestions: [] });
     };
 
     handleInputChange = (event) => {
@@ -210,13 +214,13 @@ class Header extends React.Component {
 
         return (
             <div className="header">
-                <img src={logo} alt="Логотип" className="logo" onClick={() => this.handleItemClick("Логотип")}/>
+                <img src={logo} alt="Логотип" className="logo" onClick={() => this.handleItemClick("AUD","home")}/>
                 <div className="search-container">
                     <input type="text" placeholder="Поиск курса валют" value={searchQuery} onChange={this.handleInputChange}/>
                     {suggestions.length > 0 && (
                         <ul className="suggestions">
                             {suggestions.map((rate, index) => (
-                                <li key={index} onClick={() => this.handleItemClick(rate.nameValue)}>
+                                <li key={index} onClick={() => this.handleItemClick(rate.codeValue, "changes")}>
                                     {rate.nameValue} ({rate.codeValue})
                                 </li>
                             ))}

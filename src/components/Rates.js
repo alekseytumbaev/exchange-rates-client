@@ -21,7 +21,7 @@ class Rates extends React.Component {
 
         switch (selectedSort) {
             case 'А-Я':
-                sortedRates.sort((a, b) => a.valueName.localeCompare(b.valueName));
+                sortedRates.sort((a, b) => a.valuteName.localeCompare(b.valuteName));
                 break;
             case 'По убыванию':
                 sortedRates.sort((a, b) => b.rate - a.rate);
@@ -56,7 +56,7 @@ class Rates extends React.Component {
                         </thead>
                         <tbody>
                         {sortedRates.map((element) => (
-                            <Rate key={element.id} rate={element} />
+                            <Rate key={element.digitCode} rate={element} currentPage={this.props.currentPage} onPageChange={this.props.onPageChange} updateCodeValute = {this.props.updateCodeValute} />
                         ))}
                         </tbody>
                     </table>
